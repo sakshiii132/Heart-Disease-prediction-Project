@@ -1,16 +1,24 @@
-#  Heart Disease Prediction – End-to-End Machine Learning Web Application
+# ❤️ Heart Disease Prediction – End-to-End Machine Learning Web Application
 
-An end-to-end Machine Learning application that predicts the likelihood of heart disease based on patient health parameters. The project combines a trained Random Forest classification model, a FastAPI backend, and a React frontend to provide predictions through an interactive web interface.
+An end-to-end Machine Learning application that predicts the likelihood of heart disease based on patient health parameters.
 
-The application is deployed online using **Render (Backend)** and **Vercel (Frontend)**.
+The project combines a trained Random Forest classification model, a FastAPI backend, and a React frontend to provide predictions through an interactive web interface.
+
+The application is currently deployed online using **Render (Backend)** and **Vercel (Frontend)**. Docker is used to containerize the backend, and the Docker image has been successfully pushed to **AWS Elastic Container Registry (ECR)**. AWS EC2 deployment is the next stage of the cloud deployment workflow.
 
 <p align="center">
 
-  **🌐 Live Demo:**  
-  https://heart-disease-prediction-project-kappa.vercel.app/
+**🌐 Live Demo:**  
+https://heart-disease-prediction-project-kappa.vercel.app/
 
-  **📂 GitHub Repository:**  
-  https://github.com/sakshiii132/Heart-Disease-prediction-Project
+**📂 GitHub Repository:**  
+https://github.com/sakshiii132/Heart-Disease-prediction-Project
+
+**⚙️ Backend API:**  
+https://heart-disease-prediction-project-1k3c.onrender.com/
+
+**📖 API Documentation:**  
+https://heart-disease-prediction-project-1k3c.onrender.com/docs
 
 </p>
 
@@ -33,12 +41,13 @@ The application is deployed online using **Render (Backend)** and **Vercel (Fron
 13. API Documentation
 14. Sample Prediction Request
 15. Automated Testing and CI
-16. Cloud Deployment
-17. Environment Variables
-18. Challenges and Solutions
-19. Future Improvements
-20. Disclaimer
-21. Author
+16. Cloud Deployment – Render and Vercel
+17. Docker and AWS Implementation
+18. Environment Variables
+19. Challenges and Solutions
+20. Future Improvements
+21. Disclaimer
+22. Author
 
 ---
 
@@ -54,7 +63,7 @@ The prediction and estimated probability are then displayed on the frontend.
 
 The application follows a complete end-to-end Machine Learning workflow:
 
-**Dataset → Data Preprocessing → Exploratory Data Analysis → Feature Engineering → Model Training → Model Evaluation → Model Saving → FastAPI → React → Cloud Deployment**
+**Dataset → Data Preprocessing → Exploratory Data Analysis → Feature Engineering → Model Training → Model Evaluation → Model Saving → FastAPI → React → Docker → Cloud Deployment**
 
 ---
 
@@ -69,8 +78,11 @@ The application follows a complete end-to-end Machine Learning workflow:
 - Build a REST API using FastAPI.
 - Develop an interactive frontend using React.
 - Connect the frontend and backend.
+- Containerize the backend application using Docker.
+- Store the Docker image in AWS Elastic Container Registry (ECR).
 - Implement automated testing using GitHub Actions.
-- Deploy the complete application online.
+- Deploy the frontend and backend using cloud hosting platforms.
+- Prepare the Dockerized backend for deployment on AWS EC2.
 
 ---
 
@@ -107,7 +119,11 @@ The application follows a complete end-to-end Machine Learning workflow:
 - GitHub Actions CI workflow.
 - Render backend hosting.
 - Vercel frontend hosting.
-- Production API connectivity.
+- Docker backend containerization.
+- AWS CLI configuration.
+- AWS ECR repository creation.
+- Docker image upload to AWS ECR.
+- Preparation for AWS EC2 deployment.
 
 ---
 
@@ -125,10 +141,14 @@ The application follows a complete end-to-end Machine Learning workflow:
 | Data Validation | Pydantic |
 | Frontend | React.js |
 | Frontend Build Tool | Vite |
+| Containerization | Docker |
 | Version Control | Git, GitHub |
 | Automated Testing | Pytest, GitHub Actions |
 | Backend Deployment | Render |
 | Frontend Deployment | Vercel |
+| Cloud Platform | Amazon Web Services (AWS) |
+| Container Registry | Amazon Elastic Container Registry (ECR) |
+| Cloud Infrastructure | Amazon EC2 (planned deployment) |
 
 ---
 
@@ -294,66 +314,73 @@ Random Forest is an ensemble learning algorithm that builds multiple decision tr
 
 The application uses a separate frontend and backend deployment architecture.
 
+### Current Live Application
+
 ```text
-             USER
-               |
-               v
-       REACT FRONTEND
-          (Vercel)
-               |
-               | HTTP POST Request
-               v
-        FASTAPI BACKEND
-           (Render)
-               |
-               v
-       INPUT VALIDATION
-          (Pydantic)
-               |
-               v
-       DATA PREPROCESSING
-               |
-               v
-       FEATURE ENGINEERING
-               |
-               v
-       TRAINED ML MODEL
-        (Random Forest)
-               |
-               v
-       PREDICTION RESULT
-               |
-               v
-        JSON RESPONSE
-               |
-               v
-       REACT FRONTEND
-               |
-               v
-        DISPLAY RESULT
+                USER
+                  |
+                  v
+           REACT FRONTEND
+               (Vercel)
+                  |
+                  | HTTP POST Request
+                  v
+            FASTAPI BACKEND
+                (Render)
+                  |
+                  v
+           INPUT VALIDATION
+               (Pydantic)
+                  |
+                  v
+           DATA PREPROCESSING
+                  |
+                  v
+           FEATURE ENGINEERING
+                  |
+                  v
+            TRAINED ML MODEL
+             (Random Forest)
+                  |
+                  v
+           PREDICTION RESULT
+                  |
+                  v
+             JSON RESPONSE
+                  |
+                  v
+            REACT FRONTEND
+                  |
+                  v
+             DISPLAY RESULT
 ```
 
-### Architecture Explanation
+### Docker and AWS Workflow
 
-**Frontend – React + Vite**
-
-Provides the user interface and collects patient health information.
-
-**Backend – FastAPI**
-
-Receives requests, validates input data, preprocesses features, and generates predictions.
-
-**Machine Learning Model**
-
-The saved Random Forest model performs the classification task.
-
-**Render**
-
-Hosts the FastAPI backend.
-
-**Vercel**
-
-Hosts the React frontend.
+```text
+          BACKEND APPLICATION
+                   |
+                   v
+                 DOCKER
+                   |
+                   v
+             DOCKER IMAGE
+                   |
+                   v
+                AWS ECR
+            (Image Storage)
+                   |
+                   v
+                AWS EC2
+          (Deployment Pending)
+                   |
+                   v
+           DOCKER CONTAINER
+          (Deployment Pending)
+                   |
+                   v
+            LIVE BACKEND API
+```
 
 ---
 
@@ -631,7 +658,7 @@ The workflow is located at:
 The workflow performs the following steps:
 
 1. Checks out the GitHub repository.
-2. Sets up Python.
+2. Sets up Python 3.12.
 3. Installs backend dependencies.
 4. Runs automated tests using Pytest.
 
@@ -658,11 +685,13 @@ GitHub Actions automatically runs the configured tests when changes are pushed t
 
 ---
 
-## 16. Cloud Deployment
+## 16. Cloud Deployment – Render and Vercel
 
-The application is deployed using two separate hosting platforms.
+The application is currently deployed using two separate hosting platforms.
 
 ### Frontend Deployment – Vercel
+
+**Status: Completed**
 
 The React frontend is deployed using Vercel.
 
@@ -686,7 +715,19 @@ Production environment variable:
 VITE_API_URL=https://heart-disease-prediction-project-1k3c.onrender.com
 ```
 
+Implemented:
+
+- Connected the GitHub repository to Vercel.
+- Configured the frontend project using Vite.
+- Configured the production API URL.
+- Connected the frontend to the deployed FastAPI backend.
+- Enabled automatic deployments from GitHub.
+
+Vercel hosts the frontend and serves the application through a public URL.
+
 ### Backend Deployment – Render
+
+**Status: Completed**
 
 The FastAPI backend is deployed using Render.
 
@@ -709,6 +750,18 @@ Configuration:
 | Start Command | `python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT` |
 | Health Check Path | `/` |
 
+Implemented:
+
+- Connected the GitHub repository to Render.
+- Configured the backend root directory.
+- Installed Python dependencies.
+- Configured the Uvicorn start command.
+- Configured CORS for the Vercel frontend.
+- Enabled automatic deployments from GitHub.
+- Successfully tested the prediction API.
+
+Render hosts the backend API and processes prediction requests from the frontend.
+
 ### CORS Configuration
 
 Cross-Origin Resource Sharing (CORS) allows the deployed frontend to communicate with the backend.
@@ -722,21 +775,174 @@ allow_origins=[
 ]
 ```
 
-### Deployment Workflow
+### Current Deployment Workflow
 
-Whenever backend or frontend code changes:
-
-```bash
-git add .
-git commit -m "Describe your changes"
-git push origin main
+```text
+             GITHUB REPOSITORY
+                     |
+              GITHUB ACTIONS
+                (CI Tests)
+                     |
+             +-------+-------+
+             |               |
+           VERCEL          RENDER
+         (Frontend)       (Backend)
+             |               |
+             +------ API ----+
+                     |
+               LIVE APPLICATION
 ```
 
-Render and Vercel can automatically deploy the latest changes from the connected GitHub repository.
+When code changes are pushed to the connected GitHub repository, Render and Vercel can automatically deploy the latest changes.
+
+**Note:** GitHub Actions currently runs automated backend tests. Render and Vercel handle their own automatic deployments. The CI workflow is not currently configured as a deployment approval gate.
 
 ---
 
-## 17. Environment Variables
+## 17. Docker and AWS Implementation
+
+Docker and AWS are used as part of the project's containerization and cloud infrastructure workflow.
+
+### 17.1 Docker Implementation
+
+**Status: Completed**
+
+Docker was used to package the backend application and its dependencies into a container image.
+
+Completed activities:
+
+- Created a Docker image for the backend application.
+- Tagged the Docker image for AWS Elastic Container Registry.
+- Prepared the container image for cloud deployment.
+
+Docker helps maintain a consistent application environment and simplifies deployment across different systems.
+
+### 17.2 AWS Account and CLI Configuration
+
+**Status: Completed**
+
+AWS was configured using the AWS Command Line Interface (AWS CLI).
+
+Completed activities:
+
+- AWS account registration.
+- AWS CLI configuration.
+- AWS credentials configuration.
+- AWS region configuration.
+
+**AWS Region:**
+
+```text
+Asia Pacific (Sydney)
+ap-southeast-2
+```
+
+### 17.3 Amazon Elastic Container Registry (ECR)
+
+**Status: Completed**
+
+Amazon Elastic Container Registry (ECR) is a managed service used to store Docker container images.
+
+An ECR repository was created for the Heart Disease Prediction backend.
+
+**Repository Name:**
+
+```text
+heart-disease-api
+```
+
+**AWS Region:**
+
+```text
+ap-southeast-2
+```
+
+Completed activities:
+
+- Created the ECR repository.
+- Tagged the Docker image.
+- Authenticated Docker with AWS ECR.
+- Successfully pushed the Docker image to the ECR repository.
+
+This makes the Docker image available in AWS ECR for future deployment.
+
+### 17.4 Amazon EC2 Deployment
+
+**Status: Pending verification and implementation**
+
+Amazon EC2 provides virtual servers in the cloud.
+
+The next stage is to deploy the Docker image stored in ECR on an EC2 instance.
+
+Planned activities:
+
+1. Verify whether an EC2 instance already exists in the Sydney region.
+2. Create an eligible EC2 instance if required.
+3. Configure the instance and security group.
+4. Install Docker on EC2.
+5. Configure EC2 authentication with Amazon ECR.
+6. Pull the Docker image from ECR.
+7. Run the backend Docker container.
+8. Configure the application port.
+9. Test the backend using the EC2 public endpoint.
+
+**Important:** The Docker image has been pushed to AWS ECR, but the EC2 container deployment has not yet been confirmed. Therefore, the application is currently hosted on Render, not EC2.
+
+### 17.5 Docker and AWS Implementation Status
+
+| Component | Status |
+|---|---|
+| AWS account registration | Completed |
+| AWS CLI configuration | Completed |
+| Sydney region configuration | Completed |
+| Docker image creation | Completed |
+| Docker image tagging | Completed |
+| ECR repository creation | Completed |
+| Docker image pushed to ECR | Completed |
+| EC2 instance creation | Pending verification |
+| Docker installation on EC2 | Pending |
+| Pulling image from ECR to EC2 | Pending |
+| Running Docker container on EC2 | Pending |
+| Testing EC2 deployment | Pending |
+
+### 17.6 Docker and AWS Architecture
+
+```text
+        BACKEND APPLICATION
+                 |
+                 v
+               DOCKER
+                 |
+                 v
+           DOCKER IMAGE
+                 |
+                 v
+              AWS ECR
+          (Image Storage)
+                 |
+                 v
+              AWS EC2
+        (Deployment Pending)
+                 |
+                 v
+         DOCKER CONTAINER
+        (Deployment Pending)
+                 |
+                 v
+          FASTAPI BACKEND
+```
+
+### AWS Cost Considerations
+
+The use of Docker itself does not require a Docker license fee for this workflow. However, AWS resources can incur charges.
+
+EC2, ECR storage, data transfer, public IPv4 addresses, and other resources are subject to their respective pricing and free-tier eligibility.
+
+AWS deployment should be performed after checking account eligibility, available credits, and the current billing dashboard.
+
+---
+
+## 18. Environment Variables
 
 The frontend uses the following environment variable:
 
@@ -766,7 +972,7 @@ const API_URL = `${import.meta.env.VITE_API_URL}/predict`;
 
 ---
 
-## 18. Challenges and Solutions
+## 19. Challenges and Solutions
 
 Some important challenges addressed during development:
 
@@ -781,13 +987,18 @@ Some important challenges addressed during development:
 | Backend deployment | Deployed FastAPI on Render |
 | Frontend deployment | Deployed React application on Vercel |
 | Automated testing | Configured GitHub Actions with Pytest |
+| Containerizing backend | Used Docker to create a backend image |
+| Cloud image storage | Created AWS ECR repository and pushed the Docker image |
 
 ---
 
-## 19. Future Improvements
+## 20. Future Improvements
 
 Potential improvements include:
 
+- Complete AWS EC2 deployment.
+- Run the Docker container on EC2.
+- Configure a production-ready HTTPS endpoint for the EC2 deployment.
 - Add more comprehensive automated tests.
 - Improve model evaluation and compare additional classification algorithms.
 - Add model explainability using SHAP or LIME.
@@ -796,12 +1007,11 @@ Potential improvements include:
 - Add model monitoring and performance tracking.
 - Introduce user authentication if required.
 - Improve accessibility and responsive design.
-- Add automated deployment and monitoring checks.
-- Containerize the application using Docker.
+- Implement automated Docker image deployment through GitHub Actions.
 
 ---
 
-## 20. Disclaimer
+## 21. Disclaimer
 
 This project is developed for **educational and demonstration purposes only**.
 
@@ -813,7 +1023,7 @@ Always consult a qualified healthcare professional for medical concerns.
 
 ---
 
-## 21. Author
+## 22. Author
 
 **Sakshi Parab**
 
@@ -830,8 +1040,8 @@ M.Sc. Computer Science | Machine Learning | AI Development
 
 <p align="center">
 
-  **Built with Python, Machine Learning, FastAPI and React.**
+**Built with Python, Machine Learning, FastAPI, React, Docker and AWS.**
 
-  ⭐ If you find this project useful, consider giving the repository a star!
+⭐ If you find this project useful, consider giving the repository a star!
 
 </p>
