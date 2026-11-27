@@ -1,4 +1,4 @@
-# ❤️ Heart Disease Prediction – End-to-End Machine Learning Web Application
+#  Heart Disease Prediction – End-to-End Machine Learning Web Application
 
 An end-to-end Machine Learning application that predicts the likelihood of heart disease based on patient health parameters.
 
