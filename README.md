@@ -1,286 +1,437 @@
-#  Heart Disease Prediction
+#  Heart Disease Prediction – End-to-End Machine Learning Web Application
 
-### An End-to-End Machine Learning Application
+An end-to-end Machine Learning application that predicts the likelihood of heart disease based on patient health parameters. The project combines a trained Random Forest classification model, a FastAPI backend, and a React frontend to provide predictions through an interactive web interface.
 
-A Machine Learning web application that predicts the likelihood of heart disease using patient health parameters. This project integrates a trained Random Forest Classifier with a FastAPI backend and React frontend, and demonstrates Docker containerization and AWS cloud container registry integration.
+The application is deployed online using **Render (Backend)** and **Vercel (Frontend)**.
+
+<p align="center">
+
+  **🌐 Live Demo:**  
+  https://heart-disease-prediction-project-kappa.vercel.app/
+
+  **📂 GitHub Repository:**  
+  https://github.com/sakshiii132/Heart-Disease-prediction-Project
+
+</p>
 
 ---
 
-## 📌 Project Overview
+## 📌 Table of Contents
 
-Heart Disease Prediction is an end-to-end Machine Learning project designed to demonstrate how a trained ML model can be integrated into a real-world web application.
+1. Project Overview
+2. Project Objectives
+3. Key Features
+4. Technologies Used
+5. Dataset Description
+6. Machine Learning Workflow
+7. Model Development
+8. Model Deployment Architecture
+9. Project Structure
+10. Installation and Setup
+11. Running the Backend
+12. Running the Frontend
+13. API Documentation
+14. Sample Prediction Request
+15. Automated Testing and CI
+16. Cloud Deployment
+17. Environment Variables
+18. Challenges and Solutions
+19. Future Improvements
+20. Disclaimer
+21. Author
 
-The application accepts patient health information through an interactive frontend, sends the information to a FastAPI backend, processes the input, and generates a prediction using a trained Random Forest Classifier.
+---
 
-The project covers the complete workflow, from data analysis and model development to API integration, containerization, and cloud image storage.
+## 1. Project Overview
 
-## ✨ Key Features
+Heart disease is a major health concern worldwide. Machine Learning can help identify patterns in patient health data and estimate the likelihood of heart disease.
 
-- Exploratory Data Analysis (EDA)
-- Data cleaning and preprocessing
-- Feature engineering
-- Feature selection using Mutual Information
-- Random Forest model training
-- Model serialization using Joblib
-- REST API development using FastAPI
-- Input validation using Pydantic
-- Interactive React frontend
-- Docker containerization
-- AWS Elastic Container Registry (ECR) integration
+This project implements a classification-based prediction system using a Random Forest model trained on a heart disease dataset.
 
-## 🛠️ Technology Stack
+Users can enter health-related information through a web interface. The frontend sends the information to a FastAPI backend, which processes the input and generates a prediction using the trained model.
+
+The prediction and estimated probability are then displayed on the frontend.
+
+The application follows a complete end-to-end Machine Learning workflow:
+
+**Dataset → Data Preprocessing → Exploratory Data Analysis → Feature Engineering → Model Training → Model Evaluation → Model Saving → FastAPI → React → Cloud Deployment**
+
+---
+
+## 2. Project Objectives
+
+- Develop a Machine Learning classification model for heart disease prediction.
+- Perform data cleaning and preprocessing.
+- Conduct Exploratory Data Analysis (EDA).
+- Apply feature engineering and feature encoding.
+- Train and evaluate classification models.
+- Save the trained model for future predictions.
+- Build a REST API using FastAPI.
+- Develop an interactive frontend using React.
+- Connect the frontend and backend.
+- Implement automated testing using GitHub Actions.
+- Deploy the complete application online.
+
+---
+
+## 3. Key Features
+
+### Machine Learning
+- Data preprocessing and cleaning.
+- Exploratory Data Analysis.
+- Feature engineering.
+- Categorical variable encoding.
+- Random Forest classification.
+- Prediction probability calculation.
+- Saved model artifact for reuse.
+
+### Backend
+- FastAPI-based REST API.
+- Pydantic input validation.
+- Model loading using Joblib.
+- Missing-value handling using training-data means for specified fields.
+- Feature alignment before prediction.
+- CORS configuration for frontend connectivity.
+- Error handling.
+
+### Frontend
+- Interactive React interface.
+- Health parameter input form.
+- API integration using Fetch.
+- Prediction result display.
+- Prediction probability display.
+- Error handling for API communication.
+
+### Deployment and Development
+- GitHub version control.
+- GitHub Actions CI workflow.
+- Render backend hosting.
+- Vercel frontend hosting.
+- Production API connectivity.
+
+---
+
+## 4. Technologies Used
 
 | Category | Technologies |
 |---|---|
-| Programming | Python, JavaScript |
+| Programming Language | Python, JavaScript |
 | Data Analysis | Pandas, NumPy |
-| Visualization | Matplotlib, Seaborn |
+| Data Visualization | Matplotlib, Seaborn |
 | Machine Learning | Scikit-learn |
-| ML Algorithm | Random Forest Classifier |
 | Model Serialization | Joblib |
-| Backend | FastAPI, Uvicorn |
-| Validation | Pydantic |
-| Frontend | React.js, Vite, CSS |
-| Containerization | Docker |
-| Cloud | AWS ECR |
+| Backend | FastAPI |
+| API Server | Uvicorn |
+| Data Validation | Pydantic |
+| Frontend | React.js |
+| Frontend Build Tool | Vite |
 | Version Control | Git, GitHub |
+| Automated Testing | Pytest, GitHub Actions |
+| Backend Deployment | Render |
+| Frontend Deployment | Vercel |
 
-## 🏗️ Project Architecture
+---
+
+## 5. Dataset Description
+
+The project uses a heart disease dataset containing patient health information and a target variable indicating the presence or absence of heart disease.
+
+The dataset includes the following attributes:
+
+| Feature | Description |
+|---|---|
+| Age | Age of the patient |
+| Sex | Sex of the patient |
+| ChestPainType | Type of chest pain |
+| RestingBP | Resting blood pressure |
+| Cholesterol | Serum cholesterol level |
+| FastingBS | Fasting blood sugar indicator |
+| RestingECG | Resting electrocardiogram results |
+| MaxHR | Maximum heart rate achieved |
+| ExerciseAngina | Exercise-induced angina |
+| Oldpeak | ST depression induced by exercise |
+| ST_Slope | Slope of the peak exercise ST segment |
+| HeartDisease | Target variable |
+
+**Target variable:**
+
+- `0` – No heart disease indicated in the dataset.
+- `1` – Heart disease indicated in the dataset.
+
+The target column is used during model training and is not required as an input when making a prediction.
+
+---
+
+## 6. Machine Learning Workflow
+
+### Step 1: Data Collection
+
+The heart disease dataset was loaded into Python using Pandas.
+
+### Step 2: Data Cleaning
+
+The dataset was inspected for:
+- Missing values.
+- Duplicate records.
+- Incorrect data types.
+- Invalid or inconsistent values.
+
+### Step 3: Exploratory Data Analysis (EDA)
+
+EDA was performed to understand the dataset and identify patterns.
+
+Analysis included:
+- Distribution of patient ages.
+- Heart disease distribution.
+- Cholesterol analysis.
+- Resting blood pressure analysis.
+- Maximum heart rate analysis.
+- Relationships between input features and the target variable.
+- Correlation analysis.
+
+Visualization libraries used:
+- Matplotlib
+- Seaborn
+
+### Step 4: Feature Engineering
+
+Additional features were created to improve the information available to the model.
+
+**Age Group**
+
+Patients were grouped into age categories using `pd.cut()`.
+
+**Maximum Heart Rate Percentage**
+
+Calculated using:
+
+`MaxHR_Percentage = (MaxHR / (220 - Age)) × 100`
+
+**Age and Oldpeak Interaction**
+
+Calculated using:
+
+`Age_Oldpeak = Age × Oldpeak`
+
+### Step 5: Categorical Encoding
+
+Categorical variables were converted into numerical representations using One-Hot Encoding.
+
+`pd.get_dummies()` was used with `drop_first=True`.
+
+### Step 6: Model Training
+
+A Random Forest Classifier was trained using the prepared dataset.
+
+Random Forest combines multiple decision trees to generate a classification result.
+
+### Step 7: Model Evaluation
+
+The model was evaluated using appropriate classification evaluation techniques.
+
+Common classification metrics include:
+
+- Accuracy
+- Precision
+- Recall
+- F1-score
+- Confusion Matrix
+- ROC-AUC
+
+Refer to the project notebooks for the actual experimental results.
+
+### Step 8: Model Saving
+
+The trained model and preprocessing information were saved together using Joblib.
+
+The saved artifact contains:
+
+- Trained model.
+- Training feature columns.
+- Cholesterol mean.
+- Resting blood pressure mean.
+- Age group bins.
+- Age group labels.
+
+The artifact is stored at:
+
+`backend/models/heart_disease_artifact.pkl`
+
+This allows the backend to load the trained model without retraining it every time the application starts.
+
+---
+
+## 7. Model Development
+
+The project uses the **Random Forest Classifier**.
+
+Random Forest is an ensemble learning algorithm that builds multiple decision trees and combines their predictions.
+
+### Why Random Forest?
+
+- Handles classification problems.
+- Can model nonlinear relationships.
+- Combines multiple decision trees.
+- Supports probability predictions.
+- Provides feature importance information.
+
+### Prediction Process
+
+1. User enters health parameters.
+2. Frontend sends the information to the backend.
+3. FastAPI validates the request.
+4. Backend handles specified zero-value replacements.
+5. Feature engineering is performed.
+6. Categorical features are encoded.
+7. Input columns are aligned with the model's training features.
+8. The Random Forest model generates a prediction.
+9. Prediction probability is calculated.
+10. The result is returned to the frontend.
+
+---
+
+## 8. Model Deployment Architecture
+
+The application uses a separate frontend and backend deployment architecture.
 
 ```text
-                 USER
-                   |
-                   v
-            REACT FRONTEND
-                   |
-                   | HTTP POST Request
-                   v
-             FASTAPI BACKEND
-                   |
-                   v
-             INPUT VALIDATION
-                   |
-                   v
-            DATA PREPROCESSING
-                   |
-                   v
-            FEATURE ENGINEERING
-                   |
-                   v
-          RANDOM FOREST MODEL
-                   |
-                   v
-               PREDICTION
-                   |
-                   v
-             JSON RESPONSE
-                   |
-                   v
-            REACT FRONTEND
-                   |
-                   v
-             RESULT DISPLAY
+             USER
+               |
+               v
+       REACT FRONTEND
+          (Vercel)
+               |
+               | HTTP POST Request
+               v
+        FASTAPI BACKEND
+           (Render)
+               |
+               v
+       INPUT VALIDATION
+          (Pydantic)
+               |
+               v
+       DATA PREPROCESSING
+               |
+               v
+       FEATURE ENGINEERING
+               |
+               v
+       TRAINED ML MODEL
+        (Random Forest)
+               |
+               v
+       PREDICTION RESULT
+               |
+               v
+        JSON RESPONSE
+               |
+               v
+       REACT FRONTEND
+               |
+               v
+        DISPLAY RESULT
 ```
 
-## 📂 Project Structure
+### Architecture Explanation
+
+**Frontend – React + Vite**
+
+Provides the user interface and collects patient health information.
+
+**Backend – FastAPI**
+
+Receives requests, validates input data, preprocesses features, and generates predictions.
+
+**Machine Learning Model**
+
+The saved Random Forest model performs the classification task.
+
+**Render**
+
+Hosts the FastAPI backend.
+
+**Vercel**
+
+Hosts the React frontend.
+
+---
+
+## 9. Project Structure
 
 ```text
-Heart Disease Prediction/
+Heart-Disease-prediction-Project/
+│
+├── .github/
+│   └── workflows/
+│       └── ci.yml
 │
 ├── backend/
+│   │
 │   ├── app/
 │   │   └── main.py
 │   │
 │   ├── models/
 │   │   └── heart_disease_artifact.pkl
 │   │
-│   ├── Dockerfile
-│   ├── .dockerignore
-│   ├── requirements.txt
-│   └── README.md
-│
-├── frontend/
-│   ├── public/
-│   ├── src/
-│   │   ├── App.jsx
-│   │   ├── App.css
-│   │   ├── index.css
-│   │   └── main.jsx
+│   ├── tests/
+│   │   └── test_api.py
 │   │
-│   ├── package.json
-│   └── package-lock.json
+│   └── requirements.txt
 │
 ├── data/
-│   └── heart.csv
+│
+├── frontend/
+│   │
+│   ├── src/
+│   │   ├── App.jsx
+│   │   └── ...
+│   │
+│   ├── package.json
+│   ├── index.html
+│   └── vite.config.js
 │
 ├── notebooks/
-│   └── Heart Disease Prediction.ipynb
 │
 ├── .gitignore
+├── README.md
 ├── COMMANDS.md
 ├── PROJECT_DOCUMENTATION.md
-└── README.md
+└── heart.csv
 ```
 
-*This is a simplified overview. Refer to the repository for the actual files.*
+*Note: This structure highlights the main project components. Some generated files and additional assets are omitted.*
 
-## 🧠 Machine Learning Workflow
+---
 
-### 1. Data Collection
+## 10. Installation and Setup
 
-The project uses a heart disease dataset containing patient health parameters and medical attributes.
-
-### 2. Exploratory Data Analysis
-
-EDA was performed to understand:
-
-- Dataset dimensions and structure
-- Feature distributions
-- Missing and zero values
-- Outliers
-- Relationships between variables
-- Target variable distribution
-
-### 3. Data Preprocessing
-
-The preprocessing workflow includes:
-
-- Handling missing values
-- Handling invalid zero values
-- Categorical variable encoding
-- One-Hot Encoding
-- Preparing features for model training
-
-### 4. Feature Engineering
-
-Additional features were created to capture useful relationships between patient attributes.
-
-**Maximum Heart Rate Percentage**
-
-```python
-MaxHR_Percentage = MaxHR / (220 - Age) * 100
-```
-
-**Age and Oldpeak Interaction**
-
-```python
-Age_Oldpeak = Age * Oldpeak
-```
-
-Age grouping was also performed using predefined age intervals.
-
-### 5. Feature Selection
-
-The following techniques were used:
-
-- Mutual Information
-- Random Forest Feature Importance
-
-These techniques helped evaluate the relevance of individual features.
-
-### 6. Model Training
-
-A Random Forest Classifier was trained using Scikit-learn.
-
-The trained model was evaluated and saved using Joblib.
-
-### 7. Model Serialization
-
-The saved model artifact contains:
-
-- Trained Machine Learning model
-- Feature columns
-- Cholesterol mean
-- Resting blood pressure mean
-- Age group bins
-- Age group labels
-
-This allows the backend to reuse the trained model and required preprocessing information.
-
-## ⚙️ Backend – FastAPI
-
-The backend is developed using FastAPI.
-
-It receives patient information, validates the input, performs preprocessing and feature engineering, and generates predictions using the saved model.
-
-### API Endpoints
-
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/` | Checks API availability |
-| POST | `/predict` | Generates a prediction |
-| GET | `/docs` | Interactive Swagger documentation |
-
-### Example API Request
-
-```json
-{
-  "Age": 45,
-  "Sex": "M",
-  "ChestPainType": "ATA",
-  "RestingBP": 130,
-  "Cholesterol": 240,
-  "FastingBS": 0,
-  "RestingECG": "Normal",
-  "MaxHR": 150,
-  "ExerciseAngina": "N",
-  "Oldpeak": 1.0,
-  "ST_Slope": "Up"
-}
-```
-
-### Example API Response
-
-```json
-{
-  "prediction": 0,
-  "result": "No heart disease detected",
-  "heart_disease_probability": 39.56
-}
-```
-
-*Example response for demonstration purposes.*
-
-## 💻 Frontend – React
-
-The frontend is developed using React and Vite.
-
-It provides an interface for users to enter patient health information and view the prediction returned by the backend.
-
-Main functionalities:
-
-- Patient input collection
-- Input validation
-- API integration
-- Prediction result display
-- Probability visualization
-
-## 🚀 Running the Project Locally
+Follow these steps to run the project locally.
 
 ### Prerequisites
 
-Install:
+Install the following:
 
-- Python
-- Node.js and npm
-- Git
-- Docker Desktop (optional, for container execution)
+- Python 3.10 or later (use a version compatible with the installed dependencies).
+- Node.js and npm.
+- Git.
+- Visual Studio Code (recommended).
 
-### 1. Clone the Repository
+### Step 1: Clone the Repository
 
 ```bash
 git clone https://github.com/sakshiii132/Heart-Disease-prediction-Project.git
 ```
 
-Navigate into the project directory:
+Navigate into the project:
 
 ```bash
 cd Heart-Disease-prediction-Project
 ```
 
-### 2. Start the Backend
+### Step 2: Set Up the Backend
 
-Navigate to the backend folder:
+Navigate to the backend directory:
 
 ```bash
 cd backend
@@ -292,10 +443,16 @@ Create a virtual environment:
 python -m venv venv
 ```
 
-Activate it on Windows PowerShell:
+Activate it on Windows:
 
 ```powershell
-.\venv\Scripts\Activate.ps1
+venv\Scripts\activate
+```
+
+Activate it on macOS/Linux:
+
+```bash
+source venv/bin/activate
 ```
 
 Install dependencies:
@@ -304,164 +461,377 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-Start FastAPI:
+---
+
+## 11. Running the Backend
+
+Make sure you are inside the `backend` directory and the virtual environment is activated.
+
+Run the FastAPI server:
 
 ```bash
 python -m uvicorn app.main:app --reload
 ```
 
-Backend URL:
+The backend will run at:
 
 ```text
 http://127.0.0.1:8000
 ```
 
-Swagger documentation:
+Open the interactive API documentation:
 
 ```text
 http://127.0.0.1:8000/docs
 ```
 
-### 3. Start the Frontend
+The API documentation allows you to test endpoints directly through Swagger UI.
 
-Open another terminal:
+### Available Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/` | Checks whether the API is running |
+| POST | `/predict` | Generates a heart disease prediction |
+
+---
+
+## 12. Running the Frontend
+
+Open a new terminal.
+
+Navigate to the frontend directory:
 
 ```bash
 cd frontend
 ```
 
-Install dependencies:
+Install the frontend dependencies:
 
 ```bash
 npm install
 ```
 
-Start the React development server:
+Create a `.env` file inside the frontend directory for local development:
+
+```env
+VITE_API_URL=http://127.0.0.1:8000
+```
+
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
-Frontend URL:
+The frontend will normally be available at:
 
 ```text
 http://localhost:5173
 ```
 
-Ensure the frontend API URL points to the running backend.
+Open the URL in your browser.
 
-## 🐳 Docker Implementation
-
-Docker was used to containerize the FastAPI backend.
-
-This makes the backend easier to package and run in a consistent environment.
-
-### Build Docker Image
-
-Run inside the backend directory:
-
-```bash
-docker build -t heart-disease-api .
-```
-
-### Run Docker Container
-
-```bash
-docker run --rm -p 8000:8000 heart-disease-api
-```
-
-Access the API:
-
-```text
-http://localhost:8000
-```
-
-Swagger documentation:
-
-```text
-http://localhost:8000/docs
-```
-
-### Important Docker Commands
-
-| Command | Purpose |
-|---|---|
-| `docker --version` | Checks Docker installation |
-| `docker images` | Lists Docker images |
-| `docker ps` | Lists running containers |
-| `docker ps -a` | Lists all containers |
-| `docker build -t name .` | Builds an image |
-| `docker run -p 8000:8000 name` | Runs a container |
-| `docker stop container_id` | Stops a container |
-| `docker rmi image_name` | Removes an image |
-
-## ☁️ AWS – Elastic Container Registry (ECR)
-
-Amazon Elastic Container Registry (ECR) was used to store the Dockerized backend image in a private AWS repository.
-
-### AWS Workflow
-
-1. Installed AWS CLI.
-2. Authenticated with the AWS account.
-3. Created a private ECR repository.
-4. Authenticated Docker with ECR.
-5. Tagged the local Docker image.
-6. Pushed the image to AWS ECR.
-7. Verified successful image upload.
-
-### Tag Docker Image
-
-Replace the placeholders with your AWS account ID and region:
-
-```bash
-docker tag heart-disease-api:latest YOUR_AWS_ACCOUNT_ID.dkr.ecr.ap-southeast-2.amazonaws.com/heart-disease-api:latest
-```
-
-### Push Docker Image
-
-```bash
-docker push YOUR_AWS_ACCOUNT_ID.dkr.ecr.ap-southeast-2.amazonaws.com/heart-disease-api:latest
-```
-
-### AWS Progress
-
-- [x] Docker image built successfully
-- [x] Private ECR repository created
-- [x] Docker image pushed to ECR
-- [ ] ECS/Fargate application hosting
-
-**Note:** The Docker image is stored in AWS ECR. ECS/Fargate hosting has not yet been configured, so the application does not currently have a public AWS backend URL.
-
-## 🔐 Security
-
-- Virtual environments and Node modules are excluded using `.gitignore`.
-- AWS credentials and API keys should never be committed.
-- Environment variables should be stored securely.
-- Never publish private credentials or authentication tokens.
-
-## 🔮 Future Improvements
-
-- Deploy the backend and frontend to cloud hosting platforms.
-- Configure production API URLs.
-- Implement automated testing.
-- Add model monitoring.
-- Implement CI/CD using GitHub Actions.
-- Improve application security and logging.
-
-## ⚠️ Disclaimer
-
-This project is developed for educational and demonstration purposes only.
-
-The predictions generated by this application are based on a Machine Learning model and are not a medical diagnosis. The application is not clinically validated and must not replace professional medical advice. Always consult a qualified healthcare professional for medical decisions.
-
-## 👩‍💻 Author
-
-**Sakshi Parab**
-
-M.Sc. Computer Science | Machine Learning | AI Engineering
-
-GitHub: [sakshiii132](https://github.com/sakshiii132)
+**Important:** The backend must be running for the prediction functionality to work locally.
 
 ---
 
-⭐ If you find this project interesting, consider giving the repository a star!
+## 13. API Documentation
+
+The project uses FastAPI to expose the trained Machine Learning model through a REST API.
+
+### Base URL – Production
+
+```text
+https://heart-disease-prediction-project-1k3c.onrender.com
+```
+
+### Home Endpoint
+
+**Request:**
+
+```http
+GET /
+```
+
+**Example Response:**
+
+```json
+{
+  "message": "Heart Disease Prediction API is running!"
+}
+```
+
+### Prediction Endpoint
+
+**Request:**
+
+```http
+POST /predict
+```
+
+The endpoint accepts patient information in JSON format and returns a prediction.
+
+---
+
+## 14. Sample Prediction Request
+
+### Input JSON
+
+```json
+{
+  "Age": 45,
+  "Sex": "M",
+  "ChestPainType": "ATA",
+  "RestingBP": 120,
+  "Cholesterol": 200,
+  "FastingBS": 0,
+  "RestingECG": "Normal",
+  "MaxHR": 160,
+  "ExerciseAngina": "N",
+  "Oldpeak": 1.0,
+  "ST_Slope": "Up"
+}
+```
+
+### Example Response
+
+```json
+{
+  "prediction": 0,
+  "result": "No heart disease detected",
+  "heart_disease_probability": 12.45
+}
+```
+
+*The response above is illustrative. Actual predictions and probability values depend on the trained model and submitted input.*
+
+### Response Explanation
+
+| Field | Description |
+|---|---|
+| prediction | Model's predicted class (0 or 1) |
+| result | Human-readable prediction result |
+| heart_disease_probability | Estimated model probability for class 1, expressed as a percentage |
+
+---
+
+## 15. Automated Testing and CI
+
+GitHub Actions is used to automate backend testing.
+
+The workflow is located at:
+
+```text
+.github/workflows/ci.yml
+```
+
+### CI Workflow
+
+The workflow performs the following steps:
+
+1. Checks out the GitHub repository.
+2. Sets up Python.
+3. Installs backend dependencies.
+4. Runs automated tests using Pytest.
+
+### Run Tests Locally
+
+Navigate to the backend directory:
+
+```bash
+cd backend
+```
+
+Run:
+
+```bash
+python -m pytest -v
+```
+
+### Current Test Coverage
+
+- Home endpoint availability.
+- Invalid prediction input validation.
+
+GitHub Actions automatically runs the configured tests when changes are pushed to the `main` branch or when a pull request targets `main`.
+
+---
+
+## 16. Cloud Deployment
+
+The application is deployed using two separate hosting platforms.
+
+### Frontend Deployment – Vercel
+
+The React frontend is deployed using Vercel.
+
+**Live Application:**
+
+https://heart-disease-prediction-project-kappa.vercel.app/
+
+Configuration:
+
+| Setting | Value |
+|---|---|
+| Framework | Vite |
+| Root Directory | `frontend` |
+| Build Command | `npm run build` |
+| Output Directory | `dist` |
+| Install Command | `npm install` |
+
+Production environment variable:
+
+```env
+VITE_API_URL=https://heart-disease-prediction-project-1k3c.onrender.com
+```
+
+### Backend Deployment – Render
+
+The FastAPI backend is deployed using Render.
+
+**Backend URL:**
+
+https://heart-disease-prediction-project-1k3c.onrender.com/
+
+**API Documentation:**
+
+https://heart-disease-prediction-project-1k3c.onrender.com/docs
+
+Configuration:
+
+| Setting | Value |
+|---|---|
+| Service Type | Web Service |
+| Root Directory | `backend` |
+| Runtime | Python |
+| Build Command | `pip install -r requirements.txt` |
+| Start Command | `python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT` |
+| Health Check Path | `/` |
+
+### CORS Configuration
+
+Cross-Origin Resource Sharing (CORS) allows the deployed frontend to communicate with the backend.
+
+The backend permits requests from:
+
+```python
+allow_origins=[
+    "http://localhost:5173",
+    "https://heart-disease-prediction-project-kappa.vercel.app"
+]
+```
+
+### Deployment Workflow
+
+Whenever backend or frontend code changes:
+
+```bash
+git add .
+git commit -m "Describe your changes"
+git push origin main
+```
+
+Render and Vercel can automatically deploy the latest changes from the connected GitHub repository.
+
+---
+
+## 17. Environment Variables
+
+The frontend uses the following environment variable:
+
+| Variable | Description |
+|---|---|
+| `VITE_API_URL` | Base URL of the FastAPI backend |
+
+For local development:
+
+```env
+VITE_API_URL=http://127.0.0.1:8000
+```
+
+For production:
+
+```env
+VITE_API_URL=https://heart-disease-prediction-project-1k3c.onrender.com
+```
+
+The frontend uses this variable to construct the prediction endpoint:
+
+```javascript
+const API_URL = `${import.meta.env.VITE_API_URL}/predict`;
+```
+
+**Important:** Vite environment variables prefixed with `VITE_` are exposed to frontend code. Do not store passwords, private keys, or secrets in them.
+
+---
+
+## 18. Challenges and Solutions
+
+Some important challenges addressed during development:
+
+| Challenge | Solution |
+|---|---|
+| Handling missing or zero-valued health inputs | Used stored training means for specified zero values |
+| Categorical feature conversion | Applied One-Hot Encoding |
+| Feature mismatch during prediction | Aligned input columns with saved training feature columns |
+| Saving the trained model | Used Joblib serialization |
+| Connecting frontend and backend | Integrated FastAPI using Fetch |
+| Cross-origin request errors | Configured FastAPI CORS middleware |
+| Backend deployment | Deployed FastAPI on Render |
+| Frontend deployment | Deployed React application on Vercel |
+| Automated testing | Configured GitHub Actions with Pytest |
+
+---
+
+## 19. Future Improvements
+
+Potential improvements include:
+
+- Add more comprehensive automated tests.
+- Improve model evaluation and compare additional classification algorithms.
+- Add model explainability using SHAP or LIME.
+- Improve input validation and user experience.
+- Add interactive visualizations.
+- Add model monitoring and performance tracking.
+- Introduce user authentication if required.
+- Improve accessibility and responsive design.
+- Add automated deployment and monitoring checks.
+- Containerize the application using Docker.
+
+---
+
+## 20. Disclaimer
+
+This project is developed for **educational and demonstration purposes only**.
+
+The predictions generated by the Machine Learning model are not medical diagnoses and should not be used as a substitute for professional medical advice, diagnosis, or treatment.
+
+The model's output represents a prediction based on patterns learned from its training dataset. Its performance on real-world patients has not been established through clinical validation.
+
+Always consult a qualified healthcare professional for medical concerns.
+
+---
+
+## 21. Author
+
+**Sakshi Parab**
+
+M.Sc. Computer Science | Machine Learning | AI Development
+
+### Project Links
+
+- **GitHub:** https://github.com/sakshiii132/Heart-Disease-prediction-Project
+- **Live Application:** https://heart-disease-prediction-project-kappa.vercel.app/
+- **Backend API:** https://heart-disease-prediction-project-1k3c.onrender.com/
+- **API Documentation:** https://heart-disease-prediction-project-1k3c.onrender.com/docs
+
+---
+
+<p align="center">
+
+  **Built with Python, Machine Learning, FastAPI and React.**
+
+  ⭐ If you find this project useful, consider giving the repository a star!
+
+</p>
