@@ -42,13 +42,12 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://heart-disease-prediction-project.vercel.app"
+        "https://heart-disease-prediction-project-kappa.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 # Define input data format
 
 class HeartDiseaseInput(BaseModel):
